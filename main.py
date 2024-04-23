@@ -69,7 +69,7 @@ async def main(message):
     chain = cl.user_session.get('chain')
     cb = cl.AsyncLangchainCallbackHandler()
     cb.anser_reached = True
-    res = await chain.acall(message.content, callback=[cb])
+    res = await chain.acall(message.content, callbacks=[cb])
     answer = res["result"]
     source_documents = res["source_documents"]
 
