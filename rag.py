@@ -4,9 +4,7 @@ from io import BytesIO
 from langchain_community.embeddings import OllamaEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma 
-from langchain.chains import ConversationChain
-from langchain.docstore.document import Document 
-from langchain_community.llms import Ollama
+from langchain.chains import ConversationalRetrievalChain
 from langchain_community.chat_models import ChatOllama 
 from langchain.memory import ChatMessageHistory, ConversationBufferMemory
 
@@ -59,10 +57,10 @@ async def on_chat_start():
     )
 
     # create a chain that uses the chroma vector store
-    chain = ConversationChain.from_llm(
+    chain = ConversationalRetrievalChain.from_llm(
         ChatOllama(model="mistral"),
         chain_type = "stuff",
-        retrieval = docsearch.as_retriever(),
+        retriever = docsearch.as_retriever(),
         memory = memory,
         return_source_documents = True,
     )
